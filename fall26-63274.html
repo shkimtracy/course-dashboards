@@ -56,6 +56,7 @@
   .pill:hover{border-color:var(--accent);}
   .pill.now{background:var(--accent); border-color:var(--accent); color:#fff;}
   .pill.break{background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 6px,var(--line) 6px,var(--line) 8px); font-style:italic; font-weight:600; cursor:default;}
+  .pill.lk{opacity:.45; cursor:default; pointer-events:none;}
   /* two column */
   .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
   @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
@@ -105,6 +106,11 @@
   .wk-head .dates{font-size:12px; color:var(--muted);}
   .chip{font-size:10px; font-weight:800; border-radius:5px; padding:3px 8px; letter-spacing:.5px;}
   .chip.this{background:var(--accent); color:#fff;}
+  .chip.lock{background:var(--tag-info-bg); color:var(--tag-info-tx);}
+  .item.lk .body, .item.lk .sub{color:var(--muted);}
+  .item.lk .tag{opacity:.55;}
+  .wk.lk .wk-head b, .wk.lk .wk-head .dates{color:var(--muted);}
+  .locked-note{background:var(--bg); border:1px dashed var(--line); border-radius:8px; padding:10px 14px; font-size:12.5px; color:var(--muted); margin-bottom:8px;}
   .counts{margin-left:auto; display:flex; gap:6px;}
   .wk-items{display:none; padding:2px 4px 10px 26px;}
   .wk.open .wk-items{display:block;}
@@ -270,17 +276,21 @@ function idxNow(){
   return 0;
 }
 const NOW = idxNow();
+// a week is "released" once its start date arrives; future weeks stay locked (no links)
+const released = i => i <= NOW;
+const LOCK_NOTE = '<div class="locked-note">🔒 This week has not opened yet — the preview below comes from the syllabus. Canvas content (readings, quizzes, assignments) will be posted as the semester progresses.</div>';
 
-function itemHTML(it){
+function itemHTML(it, lk){
   const [label, cls] = TAGS[it.t];
-  const title = it.h ? '<a href="' + it.h + '" target="_top">' + it.x + '</a>' : it.x;
-  return '<div class="item"><span class="tag ' + cls + '">' + label + '</span><div><div class="body">' + title + '</div>' +
+  const title = (!lk && it.h) ? '<a href="' + it.h + '" target="_top">' + it.x + '</a>' : it.x;
+  return '<div class="item' + (lk ? ' lk' : '') + '"><span class="tag ' + cls + '">' + label + '</span><div><div class="body">' + title + '</div>' +
          (it.s ? '<div class="sub">' + it.s + '</div>' : '') + '</div></div>';
 }
 
 // timeline pills
 document.getElementById('pills').innerHTML = WEEKS.map((w, i) =>
-  '<div class="pill' + (i === NOW ? ' now' : '') + (w.brk ? ' break' : '') + '" onclick="jump(' + i + ')">' + w.n + '</div>').join('');
+  '<div class="pill' + (i === NOW ? ' now' : '') + (w.brk ? ' break' : '') + (!released(i) && !w.brk ? ' lk' : '') + '"' +
+  (released(i) ? ' onclick="jump(' + i + ')"' : '') + '>' + w.n + '</div>').join('');
 function jump(i){
   const el = document.getElementById('wk' + i);
   document.querySelectorAll('.wk').forEach(w => w.classList.remove('open'));
@@ -291,9 +301,11 @@ function jump(i){
 // this week / next week
 const tw = WEEKS[NOW], nx = WEEKS[Math.min(NOW + 1, WEEKS.length - 1)];
 document.getElementById('thisWeekTitle').textContent = 'This Week (' + tw.label + ')';
-document.getElementById('thisWeek').innerHTML = tw.items.map(itemHTML).join('') || '<div class="empty">Nothing scheduled.</div>';
+document.getElementById('thisWeek').innerHTML = tw.items.map(it => itemHTML(it, false)).join('') || '<div class="empty">Nothing scheduled.</div>';
 document.getElementById('nextWeekTitle').textContent = 'Coming Up (' + nx.label + ')';
-document.getElementById('nextWeek').innerHTML = (NOW < WEEKS.length - 1 ? nx.items.map(itemHTML).join('') : '<div class="empty">That’s a wrap — great semester!</div>');
+document.getElementById('nextWeek').innerHTML = (NOW < WEEKS.length - 1
+  ? LOCK_NOTE + nx.items.map(it => itemHTML(it, true)).join('')
+  : '<div class="empty">That’s a wrap — great semester!</div>');
 
 // project timeline: 17 columns (weeks)
 const PROJ = [
@@ -323,16 +335,19 @@ function fmtRange(w){
   return f(st) + ' – ' + f(en);
 }
 document.getElementById('allWeeks').innerHTML = WEEKS.map((w, i) => {
+  const lk = !released(i);
   const due = w.items.filter(it => 'dpe'.includes(it.t)).length;
   const qz = w.items.filter(it => it.t === 'q').length;
-  return '<div class="wk' + (i === NOW ? ' open' : '') + '" id="wk' + i + '">' +
+  return '<div class="wk' + (i === NOW ? ' open' : '') + (lk ? ' lk' : '') + '" id="wk' + i + '">' +
     '<div class="wk-head" onclick="this.parentElement.classList.toggle(\'open\')">' +
     '<span class="arrow">▶</span><b>' + w.label + '</b><span class="dates">' + fmtRange(w) + '</span>' +
     (i === NOW ? '<span class="chip this">THIS WEEK</span>' : '') +
+    (lk && !w.brk ? '<span class="chip lock">🔒 OPENS LATER</span>' : '') +
     '<span class="counts">' +
     (due ? '<span class="chip t-due">' + due + ' DUE</span>' : '') +
     (qz ? '<span class="chip t-quiz">' + qz + ' QUIZ</span>' : '') +
-    '</span></div><div class="wk-items">' + w.items.map(itemHTML).join('') + '</div></div>';
+    '</span></div><div class="wk-items">' + (lk && !w.brk ? LOCK_NOTE : '') +
+    w.items.map(it => itemHTML(it, lk)).join('') + '</div></div>';
 }).join('');
 
 // theme
