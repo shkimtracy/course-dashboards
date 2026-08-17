@@ -50,9 +50,9 @@
   .sec-title .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;}
   .sec-title.plain .dot{display:none;}
   /* timeline pills */
-  .pills{display:flex; gap:6px; flex-wrap:wrap;}
-  .pill{flex:1 1 48px; min-width:48px; text-align:center; background:var(--bg); border:1px solid var(--line); color:var(--muted);
-    border-radius:8px; padding:8px 4px; font-size:13px; font-weight:700; cursor:pointer;}
+  .pills{display:flex; gap:5px; flex-wrap:nowrap;}
+  .pill{flex:1 1 0; min-width:0; text-align:center; background:var(--bg); border:1px solid var(--line); color:var(--muted);
+    border-radius:8px; padding:8px 2px; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; overflow:hidden;}
   .pill:hover{border-color:var(--accent);}
   .pill.now{background:var(--accent); border-color:var(--accent); color:#fff;}
   .pill.break{background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 6px,var(--line) 6px,var(--line) 8px); font-style:italic; font-weight:600; cursor:default;}
@@ -257,7 +257,7 @@ const WEEKS = [
  {n:"14", label:"Week 14", start:"2026-11-16", items:[
    {t:"s", x:"Session 1 (Tue, Nov 17): Exam II Overview", s:"Review session", h:MODS},
    {t:"e", x:"Exam II (in class)", s:"Thu, Nov 19 — Canvas Quiz in the classroom", h:MODS}]},
- {n:"Break", label:"Fall Break", start:"2026-11-23", brk:true, items:[
+ {n:"15", label:"Fall Break", start:"2026-11-23", brk:true, items:[
    {t:"i", x:"Fall Break — enjoy the break! 🍂", s:"No classes Nov 23–27"}]},
  {n:"16", label:"Week 16", start:"2026-11-30", items:[
    {t:"i", x:"Dead Week", s:"Use this week to polish your final report", h:MODS}]},
