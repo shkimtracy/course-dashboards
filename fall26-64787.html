@@ -78,14 +78,22 @@
   .rem:last-child{margin-bottom:0;}
   /* project timeline */
   .proj{margin-bottom:16px;}
-  .proj-head{display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:700; margin-bottom:6px;}
+  .proj-head{display:flex; align-items:center; gap:10px; font-size:14px; font-weight:700; margin-bottom:14px;}
+  .pmark{width:14px; height:14px; border-radius:4px; background:var(--accent); display:inline-block;}
   .proj-head .pct{margin-left:auto; color:var(--muted); font-weight:600; font-size:12.5px;}
-  .bar{position:relative; height:30px; background:var(--bg); border-radius:6px; overflow:hidden;}
-  .seg{position:absolute; top:4px; bottom:4px; background:var(--line); border-radius:5px; display:flex; align-items:center; justify-content:center;
-    font-size:10.5px; color:var(--muted); font-weight:600; overflow:hidden; white-space:nowrap; padding:0 6px;}
-  .seg.active{background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent);}
-  .seg.done{background:var(--accent); color:#fff;}
-  .todayline{position:absolute; top:0; bottom:0; width:2px; background:var(--accent);}
+  .bar{position:relative; height:46px; background:var(--bg); border-radius:8px;}
+  .seg{position:absolute; top:6px; bottom:6px; background:var(--accent-soft); border:1px solid #f3d9c8; border-radius:6px;
+    display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.15;
+    font-size:10.5px; color:#a06246; font-weight:600; overflow:hidden; padding:0 6px;}
+  [data-theme="dark"] .seg{border-color:#4a352c; color:#d99b7f;}
+  .seg.active{border:1.5px solid var(--accent); color:var(--accent);}
+  .seg.gray{background:var(--line); border-color:var(--line); color:var(--muted);}
+  .dot{position:absolute; top:-7px; width:14px; height:14px; border-radius:50%; background:var(--accent);
+    border:2.5px solid var(--card); transform:translateX(-50%); z-index:2;}
+  .dot.past{background:#2eaf7d;}
+  .todayline{position:absolute; top:-4px; bottom:-4px; width:2px; background:var(--accent); z-index:1;}
+  .legend{display:flex; gap:18px; font-size:11.5px; color:var(--muted); margin-top:12px; flex-wrap:wrap;}
+  .legend i{width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:5px; vertical-align:-1px;}
   .axis{display:flex; margin-top:6px;}
   .axis span{flex:1; text-align:center; font-size:10.5px; color:var(--muted);}
   .axis span.now{color:var(--accent); font-weight:800;}
@@ -307,23 +315,39 @@ document.getElementById('nextWeek').innerHTML = (NOW < WEEKS.length - 1
   ? LOCK_NOTE + nx.items.map(it => itemHTML(it, true)).join('')
   : '<div class="empty">That’s a wrap — great semester!</div>');
 
-// project timeline: 17 columns (weeks)
-const PROJ = [
-  {name:"Research &amp; Diagnosis (Deliverables 1–3)", from:1, to:3, note:"D1 · D2-1 · D2-2 · D3"},
-  {name:"Fieldwork, Analysis &amp; Workshop", from:4, to:11, note:"Collect + analyze data · Nov 5 workshop"},
-  {name:"Presentations (Deliverable 4)", from:12, to:12, note:"Nov 10 &amp; 12"},
-  {name:"Final Write-up (Deliverable 5)", from:13, to:16, note:"Due finals week"}
+// project timeline: one bar, Felipe-style segments + deadline dots (17 week columns)
+const SEGS = [
+  {label:"Impression Diagnosis", from:1, to:1},
+  {label:"Brand Audit + Positioning + Qual. Plan", from:2, to:3},
+  {label:"Fieldwork + Analysis", from:4, to:11},
+  {label:"Presenta\u00ADtions", from:12, to:12},
+  {label:"Final Write-up", from:13, to:16}
+];
+const DOTS = [
+  {week:1, date:"2026-08-27", title:"D1 — Thu, Aug 27"},
+  {week:2, date:"2026-09-03", title:"D2-1 — Thu, Sep 3"},
+  {week:3, date:"2026-09-10", title:"D2-2 & D3 — Thu, Sep 10"},
+  {week:12, date:"2026-11-10", title:"D4 — Tue, Nov 10"},
+  {week:16, date:"2026-12-11", title:"D5 — Finals Week"}
 ];
 const COLS = WEEKS.length;
 function pct(i){ return (i / COLS * 100).toFixed(2); }
-let projHtml = '';
-for (const p of PROJ){
-  const done = NOW > p.to, active = NOW >= p.from && NOW <= p.to;
-  projHtml += '<div class="proj"><div class="proj-head"><span>' + p.name + '</span><span class="pct">' + p.note + '</span></div>' +
-    '<div class="bar"><div class="seg' + (done ? ' done' : active ? ' active' : '') + '" style="left:' + pct(p.from) + '%; width:' + pct(p.to - p.from + 1) + '%;">' +
-    p.note + '</div><div class="todayline" style="left:' + pct(NOW + 0.5) + '%;"></div></div></div>';
+let segs = '';
+for (const s of SEGS){
+  const active = NOW >= s.from && NOW <= s.to;
+  segs += '<div class="seg' + (active ? ' active' : '') + '" style="left:' + pct(s.from) + '%; width:' + pct(s.to - s.from + 1) + '%;">' + s.label + '</div>';
 }
-document.getElementById('projects').innerHTML = projHtml;
+let dots = '';
+for (const d of DOTS){
+  const past = new Date() > new Date(d.date + "T23:59:59-05:00");
+  dots += '<div class="dot' + (past ? ' past' : '') + '" style="left:' + pct(d.week + 0.85) + '%;" title="' + d.title + '"></div>';
+}
+document.getElementById('projects').innerHTML =
+  '<div class="proj"><div class="proj-head"><span class="pmark"></span><span>Group Project — Real-Client Rebranding</span><span class="pct">30%</span></div>' +
+  '<div class="bar">' + segs + dots + '<div class="todayline" style="left:' + pct(NOW + 0.5) + '%;"></div></div>' +
+  '<div class="legend"><span><i style="background:#2eaf7d;"></i>Past deadline</span>' +
+  '<span><i style="background:var(--accent);"></i>Upcoming deliverable deadline (hover for date)</span>' +
+  '<span><i style="background:var(--accent); border-radius:2px;"></i>D1 &middot; D2-1 &middot; D2-2 &middot; D3 &middot; D4 &middot; D5 due dates are on the Assignments page</span></div>';
 document.getElementById('projAxis').innerHTML = WEEKS.map((w, i) =>
   '<span' + (i === NOW ? ' class="now"' : '') + '>' + w.n + '</span>').join('');
 
