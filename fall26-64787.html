@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MKTG 4343 Course Roadmap | Fall 2026</title>
+<style>
+  :root{
+    --accent:#e8613c; --accent-soft:#fdeee9; --bg:#f0f2f5; --card:#ffffff;
+    --text:#1f2733; --muted:#7a8699; --line:#e6ebf1; --head:#8a94a6;
+    --tag-reminder-bg:#fff3cd; --tag-reminder-tx:#8a6d1a;
+    --tag-due-bg:#fdecea; --tag-due-tx:#c0392b;
+    --tag-quiz-bg:#eceff4; --tag-quiz-tx:#5b6779;
+    --tag-session-bg:#e7f0fd; --tag-session-tx:#2f6fd0;
+    --tag-info-bg:#eef1f5; --tag-info-tx:#66707f;
+    --tag-project-bg:#fdeee9; --tag-project-tx:#c2542f;
+    --tag-exam-bg:#f3e8fd; --tag-exam-tx:#7d3fc0;
+  }
+  [data-theme="dark"]{
+    --bg:#141922; --card:#1d2430; --text:#e8ecf2; --muted:#9aa5b5; --line:#2c3646; --head:#7d8899;
+    --accent-soft:#3a2620;
+    --tag-reminder-bg:#3a331a; --tag-reminder-tx:#e3c463;
+    --tag-due-bg:#3d2320; --tag-due-tx:#f1917f;
+    --tag-quiz-bg:#28303d; --tag-quiz-tx:#aab6c8;
+    --tag-session-bg:#1f2e45; --tag-session-tx:#7fb0f5;
+    --tag-info-bg:#262d38; --tag-info-tx:#98a3b3;
+    --tag-project-bg:#3a2620; --tag-project-tx:#f09a7d;
+    --tag-exam-bg:#2f2340; --tag-exam-tx:#c9a1f5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.5; transition:background .25s,color .25s;}
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .topbar{background:var(--card); border-bottom:1px solid var(--line); text-align:center; padding:10px 16px; font-size:12.5px; color:var(--muted);}
+  .topbar a{font-weight:600;}
+  header{background:var(--card); border-bottom:3px solid var(--accent); padding:20px 28px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+  .badge{background:var(--accent); color:#fff; font-weight:800; font-size:18px; border-radius:10px; padding:10px 12px; letter-spacing:.5px;}
+  .htitle h1{font-size:22px; letter-spacing:-.2px;}
+  .htitle p{font-size:13px; color:var(--muted);}
+  .hspacer{flex:1;}
+  .btn{display:inline-flex; align-items:center; gap:6px; border:none; cursor:pointer; font-size:13px; font-weight:700; border-radius:20px; padding:9px 16px;}
+  .btn-dark{background:var(--text); color:var(--card);}
+  .btn-accent{background:var(--accent); color:#fff;}
+  .btn-accent:hover{filter:brightness(1.06); text-decoration:none;}
+  main{max-width:1280px; margin:0 auto; padding:20px 16px 60px;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-bottom:18px;}
+  .card.accented{border:1.5px solid var(--accent);}
+  .sec-title{font-size:11.5px; font-weight:800; letter-spacing:1.2px; color:var(--head); text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .sec-title .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;}
+  .sec-title.plain .dot{display:none;}
+  /* timeline pills */
+  .pills{display:flex; gap:6px; flex-wrap:wrap;}
+  .pill{flex:1 1 48px; min-width:48px; text-align:center; background:var(--bg); border:1px solid var(--line); color:var(--muted);
+    border-radius:8px; padding:8px 4px; font-size:13px; font-weight:700; cursor:pointer;}
+  .pill:hover{border-color:var(--accent);}
+  .pill.now{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .pill.break{background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 6px,var(--line) 6px,var(--line) 8px); font-style:italic; font-weight:600; cursor:default;}
+  /* two column */
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+  .item{display:flex; gap:12px; padding:11px 0; border-bottom:1px solid var(--line); align-items:flex-start;}
+  .item:last-child{border-bottom:none;}
+  .tag{flex:0 0 auto; font-size:10px; font-weight:800; letter-spacing:.6px; border-radius:5px; padding:3px 7px; margin-top:2px; white-space:nowrap;}
+  .t-reminder{background:var(--tag-reminder-bg); color:var(--tag-reminder-tx);}
+  .t-due{background:var(--tag-due-bg); color:var(--tag-due-tx);}
+  .t-quiz{background:var(--tag-quiz-bg); color:var(--tag-quiz-tx);}
+  .t-session{background:var(--tag-session-bg); color:var(--tag-session-tx);}
+  .t-info{background:var(--tag-info-bg); color:var(--tag-info-tx);}
+  .t-project{background:var(--tag-project-bg); color:var(--tag-project-tx);}
+  .t-exam{background:var(--tag-exam-bg); color:var(--tag-exam-tx);}
+  .item .body{font-size:13.5px;}
+  .item .sub{font-size:12px; color:var(--muted); margin-top:1px;}
+  .empty{color:var(--muted); font-size:13px; padding:8px 0;}
+  /* reminders */
+  .rem{border-left:3px solid var(--accent); padding:6px 0 6px 12px; margin-bottom:10px; font-size:13.5px;}
+  .rem:last-child{margin-bottom:0;}
+  /* project timeline */
+  .proj{margin-bottom:16px;}
+  .proj-head{display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:700; margin-bottom:6px;}
+  .proj-head .pct{margin-left:auto; color:var(--muted); font-weight:600; font-size:12.5px;}
+  .bar{position:relative; height:30px; background:var(--bg); border-radius:6px; overflow:hidden;}
+  .seg{position:absolute; top:4px; bottom:4px; background:var(--line); border-radius:5px; display:flex; align-items:center; justify-content:center;
+    font-size:10.5px; color:var(--muted); font-weight:600; overflow:hidden; white-space:nowrap; padding:0 6px;}
+  .seg.active{background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent);}
+  .seg.done{background:var(--accent); color:#fff;}
+  .todayline{position:absolute; top:0; bottom:0; width:2px; background:var(--accent);}
+  .axis{display:flex; margin-top:6px;}
+  .axis span{flex:1; text-align:center; font-size:10.5px; color:var(--muted);}
+  .axis span.now{color:var(--accent); font-weight:800;}
+  /* resources */
+  .tiles{display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:12px;}
+  .tile{display:block; background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:14px; color:var(--text);}
+  .tile:hover{border-color:var(--accent); text-decoration:none;}
+  .tile .ico{font-size:18px; margin-bottom:6px; display:block;}
+  .tile b{display:block; font-size:13.5px; margin-bottom:3px;}
+  .tile span{font-size:12px; color:var(--muted);}
+  /* all sessions */
+  .wk{border-bottom:1px solid var(--line); padding:6px 0;}
+  .wk:last-child{border-bottom:none;}
+  .wk-head{display:flex; align-items:center; gap:10px; cursor:pointer; padding:8px 4px; user-select:none;}
+  .wk-head .arrow{font-size:10px; color:var(--muted); width:12px; transition:transform .15s;}
+  .wk.open .arrow{transform:rotate(90deg);}
+  .wk-head b{font-size:14px;}
+  .wk-head .dates{font-size:12px; color:var(--muted);}
+  .chip{font-size:10px; font-weight:800; border-radius:5px; padding:3px 8px; letter-spacing:.5px;}
+  .chip.this{background:var(--accent); color:#fff;}
+  .counts{margin-left:auto; display:flex; gap:6px;}
+  .wk-items{display:none; padding:2px 4px 10px 26px;}
+  .wk.open .wk-items{display:block;}
+  footer{ text-align:center; color:var(--muted); font-size:12px; padding:24px 0 8px;}
+</style>
+</head>
+<body>
+<div class="topbar">To facilitate course navigation, I built this custom dashboard. Feedback welcome! —Professor Kim &nbsp;·&nbsp;
+  <a href="https://canvas.okstate.edu/courses/233497/modules" target="_top">Prefer the standard Canvas Module view? Click here</a></div>
+<header>
+  <div class="badge">4343</div>
+  <div class="htitle">
+    <h1>Your Course Roadmap</h1>
+    <p>MKTG 4343 Brand Marketing / Fall 2026 · Tue &amp; Thu 9:00–10:15 AM · North Classroom Building, Room 101 · CRN 64787</p>
+  </div>
+  <div class="hspacer"></div>
+  <button class="btn btn-dark" id="themeBtn" onclick="toggleTheme()">◐ DARK</button>
+  <a class="btn btn-accent" href="mailto:seung.kim@okstate.edu">✉ Contact Prof. Kim</a>
+</header>
+<main>
+  <div class="card">
+    <div class="sec-title plain">Semester Timeline</div>
+    <div class="pills" id="pills"></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card accented">
+      <div class="sec-title"><span class="dot"></span><span id="thisWeekTitle">This Week</span></div>
+      <div id="thisWeek"></div>
+    </div>
+    <div class="card">
+      <div class="sec-title plain" id="nextWeekTitle">Coming Up</div>
+      <div id="nextWeek"></div>
+    </div>
+  </div>
+
+  <div class="card accented">
+    <div class="sec-title"><span class="dot"></span>Important Reminders</div>
+    <div class="rem">Welcome to Brand Marketing! This is an in-person course (Tue &amp; Thu, 9:00–10:15 AM, North Classroom Building, Room 101). Check this dashboard at the start of every week to see what is due and what to work on.</div>
+    <div class="rem">Set up your <a href="https://canvas.okstate.edu/courses/233497/external_tools/20134" target="_top">Prepara access</a> this week — it is required, and the reading quizzes cover the assigned Prepara chapters.</div>
+    <div class="rem">Register for the <a href="https://canvas.okstate.edu/courses/233497/pages/how-to-register-for-the-harvard-business-cases-required" target="_top">Harvard Business cases</a> (required) within the first two weeks. The first case assignment (#1: Gap) is due Sep 14.</div>
+    <div class="rem">The Group Project client is revealed in Week 2 — Deliverable 1 (Initial Brand Impression Diagnosis) happens in class on Thu, Aug 27.</div>
+    <div class="rem">Almost everything is due at 11:59 PM Central. Late and missed work receives a zero — reach out <i>before</i> a deadline if something comes up.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title plain">Group Project — Timeline and Deadlines</div>
+    <div id="projects"></div>
+    <div class="axis" id="projAxis"></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title plain">Course Resources</div>
+    <div class="tiles">
+      <a class="tile" href="https://canvas.okstate.edu/courses/233497/assignments/syllabus" target="_top"><span class="ico">📄</span><b>Syllabus</b><span>Course policies and schedule</span></a>
+      <a class="tile" href="https://canvas.okstate.edu/courses/233497/modules" target="_top"><span class="ico">🗂️</span><b>Weekly Modules</b><span>All course content, week by week</span></a>
+      <a class="tile" href="mailto:seung.kim@okstate.edu"><span class="ico">🕘</span><b>Office Hours</b><span>Mon &amp; Wed 9:00–10:30 AM, 220 Business Bldg, and by appointment</span></a>
+      <a class="tile" href="https://canvas.okstate.edu/courses/233497/external_tools/20134" target="_top"><span class="ico">📚</span><b>Prepara (E-book)</b><span>Required readings &amp; AI-integrated courseware</span></a>
+      <a class="tile" href="https://canvas.okstate.edu/courses/233497/pages/how-to-register-for-the-harvard-business-cases-required" target="_top"><span class="ico">🎓</span><b>Harvard Cases</b><span>Registration instructions (required)</span></a>
+      <a class="tile" href="https://canvas.okstate.edu/courses/233497/external_tools/13053" target="_top"><span class="ico">🛒</span><b>Course Materials</b><span>Purchase / access the courseware</span></a>
+      <a class="tile" href="https://canvas.okstate.edu/courses/233497/pages/information-handout-behavioral-lab-participation-extra-credit-of-up-to-4-percent" target="_top"><span class="ico">⭐</span><b>Extra Credit</b><span>Behavioral Lab &amp; surveys — up to 8%</span></a>
+      <a class="tile" href="https://canvas.okstate.edu/courses/233497/grades" target="_top"><span class="ico">📊</span><b>Grades</b><span>Weighted by category, per the syllabus</span></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title plain">All Sessions</div>
+    <div id="allWeeks"></div>
+  </div>
+  <footer>MKTG 4343 Brand Marketing · Fall 2026 · Oklahoma State University</footer>
+</main>
+
+<script>
+const BASE = "https://canvas.okstate.edu/courses/233497";
+const A1 = BASE + "/assignments/2709516";
+const MODS = BASE + "/modules";
+const ASGN = BASE + "/assignments";
+
+// type: s=session, q=quiz, d=due, r=reminder, p=project, i=info, e=exam
+const WEEKS = [
+ {n:"1", label:"Week 1", start:"2026-08-17", items:[
+   {t:"s", x:"Session 1 (Tue, Aug 18): Course Overview", s:"First class — welcome!", h:MODS},
+   {t:"s", x:"Session 2 (Thu, Aug 20): What Is a Brand?", s:"Read: Prepara Ch.1 · Keller Ch.1 pp.1–34", h:MODS},
+   {t:"d", x:"Assignment 1: What Makes a Brand a Brand?", s:"In-class individual activity · due Sat 8/22, 11:59 PM", h:A1},
+   {t:"r", x:"Set up Prepara and register for the Harvard cases this week.", s:"Reminder"}]},
+ {n:"2", label:"Week 2", start:"2026-08-24", items:[
+   {t:"s", x:"Session 1 (Tue, Aug 25): Customer-Based Brand Equity", s:"Read: Prepara Ch.2 · Keller Ch.2 pp.38–46", h:MODS},
+   {t:"q", x:"Online Quiz 1 (10 min, in class)", s:"Tue, Aug 25 — first 10 minutes", h:MODS},
+   {t:"s", x:"Session 2 (Thu, Aug 27): Group Project Activity — Initial Brand Impression Diagnosis", s:"Client revealed this week!", h:MODS},
+   {t:"p", x:"(G) Deliverable 1 — Initial Brand Impression Diagnosis", s:"Thu, Aug 27 (in-class group activity)", h:ASGN}]},
+ {n:"3", label:"Week 3", start:"2026-08-31", items:[
+   {t:"s", x:"Session 1 (Tue, Sep 1): Brand Positioning", s:"Read: Prepara Ch.3 · Keller Ch.2 pp.47–70", h:MODS},
+   {t:"q", x:"Online Quiz 2 (10 min, in class)", s:"Tue, Sep 1", h:MODS},
+   {t:"s", x:"Session 2 (Thu, Sep 3): Group Project Overview", s:"In-class group activity", h:MODS},
+   {t:"p", x:"(G) Deliverable 2-1 — Brand Positioning", s:"Thu, Sep 3", h:ASGN}]},
+ {n:"4", label:"Week 4", start:"2026-09-07", items:[
+   {t:"s", x:"Session 1 (Tue, Sep 8): Brand Resonance Pyramid", s:"Read: Prepara Ch.4 · Keller Ch.3 pp.77–104", h:MODS},
+   {t:"q", x:"Online Quiz 3 (10 min, in class)", s:"Tue, Sep 8", h:MODS},
+   {t:"p", x:"(G) Deliverable 2-2 — Brand Resonance Pyramid", s:"Tue, Sep 8", h:ASGN},
+   {t:"s", x:"Session 2 (Thu, Sep 10): Measuring Brand Equity I", s:"Prepara Ch.10 (10.1–10.3) · Keller Ch.9 pp.297–310 · Group activity: Plan Qualitative Research", h:MODS},
+   {t:"q", x:"Online Quiz 4 (10 min, in class)", s:"Thu, Sep 10", h:MODS},
+   {t:"p", x:"(G) Deliverable 3 — Sampling &amp; Qualitative Plan", s:"Thu, Sep 10", h:ASGN},
+   {t:"d", x:"#1: Gap case assignment", s:"Due Mon, Sep 14 — read the case before Tuesday!", h:ASGN}]},
+ {n:"5", label:"Week 5", start:"2026-09-14", items:[
+   {t:"s", x:"Session 1 (Tue, Sep 15): Understanding Consumers", s:"Case: “Predicting Consumer Tastes with Big Data at Gap” (HBS 9-517-115) — in-class discussion", h:MODS},
+   {t:"s", x:"Session 2 (Thu, Sep 17): Measuring Brand Equity II", s:"Prepara Ch.12.2–12.4 · Keller Ch.9 pp.311–328, Ch.10 pp.332–366", h:MODS},
+   {t:"q", x:"Online Quiz 5 (10 min, in class)", s:"Thu, Sep 17", h:MODS}]},
+ {n:"6", label:"Week 6", start:"2026-09-21", items:[
+   {t:"s", x:"Session 1 (Tue, Sep 22): Conjoint Analysis", s:"Read: Prepara Ch.12.2 (Conjoint Analysis)", h:MODS},
+   {t:"s", x:"Session 2 (Thu, Sep 24): Valuing Brands", s:"Case: “Apple vs. Samsung: The $2 Billion Case” (CU 137) · Prepara 12.1/12.3/12.4 · Keller Ch.11", h:MODS},
+   {t:"d", x:"#2: Apple/Samsung case assignment", s:"Due Wed, Sep 23", h:ASGN}]},
+ {n:"7", label:"Week 7", start:"2026-09-28", items:[
+   {t:"s", x:"Session 1 (Tue, Sep 29): Exam 1 Overview", s:"Review session — come with questions", h:MODS},
+   {t:"e", x:"Exam 1 (in class)", s:"Thu, Oct 1 — Canvas Quiz in the classroom", h:MODS},
+   {t:"i", x:"Mid-Semester Course Feedback Survey (+2 extra points)", s:"Open until Sun 11:59 PM — Week 7 module", h:MODS}]},
+ {n:"8", label:"Week 8", start:"2026-10-05", items:[
+   {t:"s", x:"Session 1 (Tue, Oct 6): Conjoint Analysis Workshop", s:"discover.sawtoothsoftware.com — in-class individual activity", h:"https://discover.sawtoothsoftware.com"},
+   {t:"s", x:"Session 2 (Thu, Oct 8): Building Brand Equity I", s:"Prepara 6.1, 6.3 · Keller Ch.4 pp.112–141, Ch.5 pp.148–178", h:MODS},
+   {t:"q", x:"Online Quiz 6 (10 min, in class)", s:"Thu, Oct 8", h:MODS},
+   {t:"d", x:"#3: Conjoint assignment", s:"Due Fri, Oct 9", h:ASGN}]},
+ {n:"9", label:"Week 9", start:"2026-10-12", items:[
+   {t:"s", x:"Session 1 (Tue, Oct 13): Building Brand Equity II", s:"Prepara Ch.7 · Keller Ch.6 pp.185–214", h:MODS},
+   {t:"q", x:"Online Quiz 7 (10 min, in class)", s:"Tue, Oct 13", h:MODS},
+   {t:"s", x:"Session 2 (Thu, Oct 15): Brand Names and Logos", s:"Petty (2008), “Naming Names: Trademark Strategy and Beyond, Part I” · Prepara 6.2, 6.4–6.5", h:MODS},
+   {t:"q", x:"Online Quiz 8 (10 min, in class)", s:"Thu, Oct 15", h:MODS}]},
+ {n:"10", label:"Week 10", start:"2026-10-19", items:[
+   {t:"s", x:"Session 1 (Tue, Oct 20): Brands in the Digital and Agentic World", s:"Prepara Ch.8 · Keller Ch.7 pp.219–250", h:MODS},
+   {t:"q", x:"Online Quiz 9 (10 min, in class)", s:"Tue, Oct 20", h:MODS},
+   {t:"s", x:"Session 2 (Thu, Oct 22): Brand Architecture and Sub-brands", s:"Prepara Ch.13 · Keller Ch.12 pp.396–434", h:MODS},
+   {t:"q", x:"Online Quiz 10 (10 min, in class)", s:"Thu, Oct 22", h:MODS}]},
+ {n:"11", label:"Week 11", start:"2026-10-26", items:[
+   {t:"s", x:"Session 1 (Tue, Oct 27): Brand Extensions", s:"Prepara Ch.14 · Keller Ch.13 pp.439–475", h:MODS},
+   {t:"q", x:"Online Quiz 11 (10 min, in class)", s:"Tue, Oct 27", h:MODS},
+   {t:"d", x:"#4: Google case assignment", s:"Due Wed, Oct 28", h:ASGN},
+   {t:"s", x:"Session 2 (Thu, Oct 29): Managing Brand Portfolio", s:"Case: “Navigating the Brand Portfolio of Google's Geo Services Division” (KE 1279)", h:MODS},
+   {t:"d", x:"#5: Crocs case assignment", s:"Due Mon, Nov 2", h:ASGN}]},
+ {n:"12", label:"Week 12", start:"2026-11-02", items:[
+   {t:"s", x:"Session 1 (Tue, Nov 3): Managing Brands over Time", s:"Case: “Crocs: Using Community-Centric Marketing to Make Ugly Iconic” · Prepara Ch.15 · Keller Ch.14", h:MODS},
+   {t:"s", x:"Session 2 (Thu, Nov 5): Workshop &amp; Q&amp;A for Group Project", s:"Bring your team's analysis, data, and questions", h:MODS}]},
+ {n:"13", label:"Week 13", start:"2026-11-09", items:[
+   {t:"s", x:"Session 1 (Tue, Nov 10): Group Presentation I", s:"10-minute team presentations", h:MODS},
+   {t:"p", x:"(G) Deliverable 4 — Team Oral Research Presentation", s:"Tue, Nov 10", h:ASGN},
+   {t:"s", x:"Session 2 (Thu, Nov 12): Group Presentation II", s:"10-minute team presentations", h:MODS}]},
+ {n:"14", label:"Week 14", start:"2026-11-16", items:[
+   {t:"s", x:"Session 1 (Tue, Nov 17): Exam II Overview", s:"Review session", h:MODS},
+   {t:"e", x:"Exam II (in class)", s:"Thu, Nov 19 — Canvas Quiz in the classroom", h:MODS}]},
+ {n:"Break", label:"Fall Break", start:"2026-11-23", brk:true, items:[
+   {t:"i", x:"Fall Break — enjoy the break! 🍂", s:"No classes Nov 23–27"}]},
+ {n:"16", label:"Week 16", start:"2026-11-30", items:[
+   {t:"i", x:"Dead Week", s:"Use this week to polish your final report", h:MODS}]},
+ {n:"Finals", label:"Finals Week", start:"2026-12-07", items:[
+   {t:"p", x:"(G) Deliverable 5 — Team Final Write-up", s:"Final Project Write-up Submission — due during finals week (Dec 7–11)", h:ASGN}]}
+];
+
+const TAGS = {s:["SESSION","t-session"], q:["QUIZ","t-quiz"], d:["DUE","t-due"], r:["REMINDER","t-reminder"],
+              p:["GROUP PROJECT","t-project"], i:["INFO","t-info"], e:["EXAM","t-exam"]};
+
+function idxNow(){
+  const now = new Date();
+  for (let i = WEEKS.length - 1; i >= 0; i--){
+    if (now >= new Date(WEEKS[i].start + "T00:00:00-05:00")) return i;
+  }
+  return 0;
+}
+const NOW = idxNow();
+
+function itemHTML(it){
+  const [label, cls] = TAGS[it.t];
+  const title = it.h ? '<a href="' + it.h + '" target="_top">' + it.x + '</a>' : it.x;
+  return '<div class="item"><span class="tag ' + cls + '">' + label + '</span><div><div class="body">' + title + '</div>' +
+         (it.s ? '<div class="sub">' + it.s + '</div>' : '') + '</div></div>';
+}
+
+// timeline pills
+document.getElementById('pills').innerHTML = WEEKS.map((w, i) =>
+  '<div class="pill' + (i === NOW ? ' now' : '') + (w.brk ? ' break' : '') + '" onclick="jump(' + i + ')">' + w.n + '</div>').join('');
+function jump(i){
+  const el = document.getElementById('wk' + i);
+  document.querySelectorAll('.wk').forEach(w => w.classList.remove('open'));
+  el.classList.add('open');
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// this week / next week
+const tw = WEEKS[NOW], nx = WEEKS[Math.min(NOW + 1, WEEKS.length - 1)];
+document.getElementById('thisWeekTitle').textContent = 'This Week (' + tw.label + ')';
+document.getElementById('thisWeek').innerHTML = tw.items.map(itemHTML).join('') || '<div class="empty">Nothing scheduled.</div>';
+document.getElementById('nextWeekTitle').textContent = 'Coming Up (' + nx.label + ')';
+document.getElementById('nextWeek').innerHTML = (NOW < WEEKS.length - 1 ? nx.items.map(itemHTML).join('') : '<div class="empty">That’s a wrap — great semester!</div>');
+
+// project timeline: 17 columns (weeks)
+const PROJ = [
+  {name:"Research &amp; Diagnosis (Deliverables 1–3)", from:1, to:3, note:"D1 · D2-1 · D2-2 · D3"},
+  {name:"Fieldwork, Analysis &amp; Workshop", from:4, to:11, note:"Collect + analyze data · Nov 5 workshop"},
+  {name:"Presentations (Deliverable 4)", from:12, to:12, note:"Nov 10 &amp; 12"},
+  {name:"Final Write-up (Deliverable 5)", from:13, to:16, note:"Due finals week"}
+];
+const COLS = WEEKS.length;
+function pct(i){ return (i / COLS * 100).toFixed(2); }
+let projHtml = '';
+for (const p of PROJ){
+  const done = NOW > p.to, active = NOW >= p.from && NOW <= p.to;
+  projHtml += '<div class="proj"><div class="proj-head"><span>' + p.name + '</span><span class="pct">' + p.note + '</span></div>' +
+    '<div class="bar"><div class="seg' + (done ? ' done' : active ? ' active' : '') + '" style="left:' + pct(p.from) + '%; width:' + pct(p.to - p.from + 1) + '%;">' +
+    p.note + '</div><div class="todayline" style="left:' + pct(NOW + 0.5) + '%;"></div></div></div>';
+}
+document.getElementById('projects').innerHTML = projHtml;
+document.getElementById('projAxis').innerHTML = WEEKS.map((w, i) =>
+  '<span' + (i === NOW ? ' class="now"' : '') + '>' + w.n + '</span>').join('');
+
+// all sessions
+function fmtRange(w){
+  const st = new Date(w.start + "T00:00:00-05:00");
+  const en = new Date(st.getTime() + 4 * 864e5);
+  const f = d => d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  return f(st) + ' – ' + f(en);
+}
+document.getElementById('allWeeks').innerHTML = WEEKS.map((w, i) => {
+  const due = w.items.filter(it => 'dpe'.includes(it.t)).length;
+  const qz = w.items.filter(it => it.t === 'q').length;
+  return '<div class="wk' + (i === NOW ? ' open' : '') + '" id="wk' + i + '">' +
+    '<div class="wk-head" onclick="this.parentElement.classList.toggle(\'open\')">' +
+    '<span class="arrow">▶</span><b>' + w.label + '</b><span class="dates">' + fmtRange(w) + '</span>' +
+    (i === NOW ? '<span class="chip this">THIS WEEK</span>' : '') +
+    '<span class="counts">' +
+    (due ? '<span class="chip t-due">' + due + ' DUE</span>' : '') +
+    (qz ? '<span class="chip t-quiz">' + qz + ' QUIZ</span>' : '') +
+    '</span></div><div class="wk-items">' + w.items.map(itemHTML).join('') + '</div></div>';
+}).join('');
+
+// theme
+function toggleTheme(){
+  const b = document.body;
+  const dark = b.getAttribute('data-theme') === 'dark';
+  b.setAttribute('data-theme', dark ? '' : 'dark');
+  document.getElementById('themeBtn').textContent = dark ? '◐ DARK' : '◑ LIGHT';
+}
+</script>
+</body>
+</html>
