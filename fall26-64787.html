@@ -276,7 +276,15 @@ const WEEKS = [
 const TAGS = {s:["SESSION","t-session"], q:["QUIZ","t-quiz"], d:["DUE","t-due"], r:["REMINDER","t-reminder"],
               p:["GROUP PROJECT","t-project"], i:["INFO","t-info"], e:["EXAM","t-exam"]};
 
+// Manual override: set to a week number (e.g. 2) to force "This Week".
+// Set back to null to go back to automatic (by today's date).
+const WEEK_OVERRIDE = 2;
+
 function idxNow(){
+  if (WEEK_OVERRIDE != null){
+    const k = WEEKS.findIndex(w => w.n === String(WEEK_OVERRIDE));
+    if (k >= 0) return k;
+  }
   const now = new Date();
   for (let i = WEEKS.length - 1; i >= 0; i--){
     if (now >= new Date(WEEKS[i].start + "T00:00:00-05:00")) return i;
